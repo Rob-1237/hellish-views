@@ -7,7 +7,7 @@ const nav = [
   ["/reviews", "Reviews"],
   ["/writing", "Writing"],
   ["/posts", "Posts"],
-  ["/index", "Contents"],
+  ["/contents", "Contents"],
 ];
 
 // Marks the current section. Series pages sit under Posts now.

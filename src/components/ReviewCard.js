@@ -8,6 +8,7 @@ export default function ReviewCard({ review, feature = false }) {
     <ContentCard
       href={`/reviews/${review.slug}`}
       image={review.cover}
+      imageScale={review.coverScale}
       eyebrow={`${label} · ${MEDIA[review.medium]?.singular}`}
       title={review.title}
       year={review.workYear}

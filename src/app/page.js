@@ -38,6 +38,7 @@ export default function Home() {
                 key={i.href}
                 href={i.href}
                 image={i.cover}
+                imageScale={i.coverScale}
                 eyebrow={i.type === "review" ? MEDIA[i.medium]?.singular : i.type === "writing" ? i.form : "Post"}
                 title={i.title}
                 dek={i.dek}
@@ -66,7 +67,7 @@ export default function Home() {
             <p className="eyebrow">About</p>
             <h2>Harry, and a year of <span className="wordmark">Hellish Views</span></h2>
             <div className="prose">
-              <p> Harry Evans is the writer behind <em>Hellish Views</em>, descending into the darkest corners of horror across film, television, video games, music, novels, short stories, and beyond. From body horror and hauntings to occult nightmares, aliens, and things that were never meant to crawl out of the dark, Harry writes with equal parts obsession, irreverence, and genuine love for the genre.</p>
+              <p> Harry Evans is the writer behind <em>Hellish Views</em>, descending into the darkest corners of horror across film, television, video games, music, novels, short stories, and beyond. From body horror and hauntings to occult nightmares, aliens, and things that were never meant to crawl out of the dark, Harry writes with equal parts obsession and genuine love for the genre.</p>
             </div>
           </div>
           <figure className="about__figure">

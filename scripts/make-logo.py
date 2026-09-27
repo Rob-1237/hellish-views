@@ -177,6 +177,29 @@ horiz_thorns = [
     (0, 11, 0.9, 0.95, 55, 250, 95, 55),           # final S, up and out
 ]
 
+def letters(chars="HELISVWbyarvns", gap=120):
+    """Each letter as its own named vector, in a row, for Figma: File >
+    Import (or drag in) gives one layer per letter, named by character."""
+    parts, x = [], 0
+    for ch in chars:
+        name = tt.getBestCmap()[ord(ch)]
+        pen = SVGPathPen(gs)
+        gs[name].draw(TransformPen(pen, (1, 0, 0, -1, x, 800)))
+        layer = ch if ch.isupper() else f"{ch} (lower)"
+        parts.append(f'<path id="{layer}" fill="{TEXT}" d="{pen.getCommands()}"/>')
+        x += gs[name].width + gap
+    svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 0 {x + 60} 1000" width="{x + 120}" height="1000">\n' + "\n".join(parts) + "\n</svg>\n"
+    out = ROOT / "design" / "letters"
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "hal-gap-letters-wdth90.svg").write_text(svg)
+    return out / "hal-gap-letters-wdth90.svg"
+
+
 if __name__ == "__main__":
-    print("full", build(full_lines, full_thorns, full_vines, name="full"))
-    print("horizontal", build(horiz_lines, horiz_thorns, name="horizontal"))
+    # --letters: only the loose letters for Figma (design/letters/).
+    if "--letters" in sys.argv:
+        print("letters", letters())
+    else:
+        HERE.mkdir(parents=True, exist_ok=True)
+        print("full", build(full_lines, full_thorns, full_vines, name="full"))
+        print("horizontal", build(horiz_lines, horiz_thorns, name="horizontal"))

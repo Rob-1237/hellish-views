@@ -58,7 +58,7 @@ MANIFEST = [
     dict(src="a-brief-look-at-the-invaders-1967", type="review", slug="the-invaders-1967", kind="recommendation", title="The Invaders", workYear=1967, medium="tv", creator="Larry Cohen", scores=None, tags=["sci-fi"]),
 
     # ---- Writing ---------------------------------------------------------
-    dict(src="darkling-a-short-story", type="writing", slug="darkling", form="fiction", title="Darkling"),
+    dict(src="darkling-a-short-story", type="writing", slug="darkling", form="fiction", title="Darkling", coverScale=1.04),
     dict(src="the-cough-a-short-story", type="writing", slug="the-cough", form="fiction", title="The Cough"),
     dict(src="devoid-a-poem", type="writing", slug="devoid", form="poetry", title="Devoid"),
     dict(src="struck-a-poem", type="writing", slug="struck", form="poetry", title="Struck"),
@@ -68,7 +68,7 @@ MANIFEST = [
     dict(src="the-hellish-views-scoring-system", type="post", slug="the-hellish-views-scoring-system", title="The Hellish Views Scoring System", tags=["meta"], keyScores=[None, S(3, 1, 2, 3, 2)]),
     dict(src="a-year-of-hellish-views", type="post", slug="a-year-of-hellish-views", title="A Year of Hellish Views", tags=["meta", "annual"]),
     dict(src="introduction-evil-dead", type="post", slug="introduction-evil-dead", title="Introduction: Evil Dead", tags=["evil-dead"]),
-    dict(src="evil-dead-wrap-up", type="post", slug="evil-dead-wrap-up", title="Evil Dead: Wrap-Up", tags=["evil-dead"]),
+    dict(src="evil-dead-wrap-up", type="post", slug="evil-dead-wrap-up", title="Evil Dead: Wrap-Up", tags=["evil-dead"], coverScale=1.08),
     dict(src="is-the-long-dark-2017-a-horror-game", type="post", slug="is-the-long-dark-a-horror-game", title="Is The Long Dark a Horror Game in Disguise?", tags=["games"]),
 ]
 
@@ -334,6 +334,9 @@ def build(cache):
             "contributors": ["Harry"],
             "substackUrl": p.get("canonical_url"),
             "cover": p.get("cover_image"),
+            # Some Substack covers have white bars baked into their edges;
+            # a small zoom on the card crops them out.
+            "coverScale": m.get("coverScale"),
         }
         if m["type"] == "review":
             reviews.append({

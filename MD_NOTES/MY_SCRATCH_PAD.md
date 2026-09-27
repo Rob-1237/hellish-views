@@ -86,13 +86,3 @@ ___
 
 ___
 
--I have commented out some lines while I think things through visually, please leave them as-is for now.
--We will stick with the font that is currently in place for the logo and wordmark.
--Let's give the About section on the Home page our Navy color theme.
--Let's replace the use of Charter font in the headings with Cinzel Decorative to see how it looks.
--We have an error in the console:
-```react_devtools_backend_compact.js:1 Uncaught Error: Cannot send a message through a Bridge that has been shut down.
-    at A._assertNotShutdown (react_devtools_backe…_compact.js:1:27203)
-    at A.send (react_devtools_backe…_compact.js:1:26545)
-    at sendScroll (react_devtools_backe…_compact.js:1:43663)
-    at HTMLDocument.<anonymous> (react_devtools_backe…_compact.js:1:46244)```

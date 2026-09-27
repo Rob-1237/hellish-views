@@ -354,10 +354,10 @@ dialog.modal::backdrop { background: rgb(5 6 8 / .75); }
 .card__media { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--color-surface-alt); }
 .card__media img {
   width: 100%; height: 100%; object-fit: cover;
-  filter: brightness(.72) saturate(.85);
+  filter: brightness(.72) saturate(.85); scale: var(--img-scale, 1);
   transition: filter var(--duration-slow) var(--ease-out), scale var(--duration-slow) var(--ease-out);
 }
-.card--link:hover .card__media img, .card--link:focus-visible .card__media img { filter: none; scale: 1.035; }
+.card--link:hover .card__media img, .card--link:focus-visible .card__media img { filter: none; scale: calc(var(--img-scale, 1) * 1.035); }
 .card__fallback {
   position: absolute; inset: 0; display: grid; place-items: center;
   background:
@@ -384,3 +384,15 @@ dialog.modal::backdrop { background: rgb(5 6 8 / .75); }
 .site-footer .container { justify-items: center; text-align: center; }
 .site-footer__mark { text-align: left; } /* the stack's indents are the design; centre the block, not the lines */
 .site-footer .navlinks--column { justify-items: center; }
+
+/* Contents: the right-hand values (scores, dashes, dates, writing types,
+   part counts) in the deeper accent. */
+.index-list li > .muted { color: var(--color-accent-deep); }
+
+/* Footer on phones: buttons, then links, then the wordmark. */
+@media (max-width: 47.99rem) {
+  .site-footer .container { grid-template-columns: 1fr; gap: var(--space-8); }
+  .site-footer__actions { order: 1; }
+  .site-footer .navlinks--column { order: 2; }
+  .site-footer__mark { order: 3; }
+}

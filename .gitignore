@@ -11,3 +11,6 @@ public/HAL Typefaces Unlicensed Fonts/
 # Logo artwork built from the unlicensed HAL Gap trial: concept only until
 # HAL Gap is licensed for logo use. Regenerate with scripts/make-logo.py.
 design/logo/
+
+# Loose HAL Gap letters for Figma, from the unlicensed trial: local only.
+design/letters/

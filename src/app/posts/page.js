@@ -13,7 +13,7 @@ export default function PostsPage() {
         </div>
         <ul className="card-grid">
           {allPosts().map((p) => (
-            <ContentCard key={p.slug} href={`/posts/${p.slug}`} image={p.cover} eyebrow="Post" title={p.title} dek={p.dek} meta={[formatDate(p.publishedAt)]} />
+            <ContentCard key={p.slug} href={`/posts/${p.slug}`} image={p.cover} imageScale={p.coverScale} eyebrow="Post" title={p.title} dek={p.dek} meta={[formatDate(p.publishedAt)]} />
           ))}
         </ul>
       </div>
@@ -28,7 +28,7 @@ export default function PostsPage() {
             {allSeries().map((s) => {
               const members = seriesMembers(s.slug);
               return (
-                <ContentCard key={s.slug} href={`/series/${s.slug}`} image={members[0]?.cover} eyebrow="Series" title={s.title} dek={s.intro} meta={[`${members.length} parts`]} />
+                <ContentCard key={s.slug} href={`/series/${s.slug}`} image={members[0]?.cover} imageScale={members[0]?.coverScale} eyebrow="Series" title={s.title} dek={s.intro} meta={[`${members.length} parts`]} />
               );
             })}
           </ul>

@@ -22,7 +22,7 @@ export default async function TagPage({ params }) {
       </div>
       <ul className="card-grid">
         {items.map((i) => (
-          <ContentCard key={i.href} href={i.href} image={i.cover} eyebrow={i.type} title={i.title} dek={i.dek} meta={[formatDate(i.publishedAt)]} />
+          <ContentCard key={i.href} href={i.href} image={i.cover} imageScale={i.coverScale} eyebrow={i.type} title={i.title} dek={i.dek} meta={[formatDate(i.publishedAt)]} />
         ))}
       </ul>
       <div style={{ height: "var(--space-12)" }} />

@@ -17,6 +17,7 @@ export default function WritingPage() {
             key={w.slug}
             href={`/writing/${w.slug}`}
             image={w.cover}
+            imageScale={w.coverScale}
             eyebrow={w.form}
             title={w.title}
             dek={w.dek}

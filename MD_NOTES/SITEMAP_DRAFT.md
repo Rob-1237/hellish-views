@@ -38,7 +38,8 @@ Archive size is now known: roughly 250 Substack posts over one year, of which 45
   /posts/[slug]             Single post
   /posts#series             Series section (the Evil Dead miniseries, etc.)
 /series/[slug]              Single series, ordered
-/index                      The full contents page, generated
+/contents                   The full contents page, generated (was /index: that
+                            name clashes with Home's index.html in a build)
 /reviews#scoring            Scoring guide — a modal, opened from Reviews and the footer
 /#about                     About — a section on Home
 /#subscribe                 Subscribe — a section on Home
@@ -62,7 +63,7 @@ A few notes on why it is shaped this way.
 
 **Series are a section of `/posts`, with their own detail pages.** Harry references an Evil Dead miniseries, and his Dark Tower review is effectively part of a reading run. Series membership is a relation on the review; `/series/[slug]` is the generated view of one run. There is no `/series` index page — the list lives at `/posts#series`.
 
-**`/index` is the generated replacement** for the hand-maintained Contents Page he currently pins on Substack. Detail in its own section below.
+**`/contents` is the generated replacement** for the hand-maintained Contents Page he currently pins on Substack. Detail in its own section below.
 
 **Collaborations are a field, not a type.** Any document carries `contributors[]`; the byline renders one or many.
 
@@ -134,7 +135,7 @@ Each series page gets a title, an intro, and the ordered list. On any member pag
 
 This handles the Evil Dead miniseries, a book series read in order, and any future multi-part project without new routes.
 
-## `/index` — the contents page
+## `/contents` — the contents page
 
 Harry maintains a Contents Page by hand and pins it, with a dedicated fiction section. He refers readers to it repeatedly across posts. Generating it is the clearest single win available here: it stops being a chore, and it stops being out of date.
 

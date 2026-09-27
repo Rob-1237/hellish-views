@@ -4,14 +4,14 @@ import Link from "next/link";
 // full-bleed across the top; anything without one gets the branded fallback.
 // On hover the image lifts out of its shade, and the title and date lines
 // slide left into line with the description.
-export default function ContentCard({ href, image, eyebrow, title, year, dek, meta = [], extra, feature = false }) {
+export default function ContentCard({ href, image, imageScale, eyebrow, title, year, dek, meta = [], extra, feature = false }) {
   const Heading = feature ? "h2" : "h3";
   return (
     <li className={`card-item${feature ? " card-item--feature" : ""}`}>
       <Link href={href} className="card card--link">
         <div className="card__media">
           {image ? (
-            <img src={image} alt="" loading={feature ? "eager" : "lazy"} />
+            <img src={image} alt="" loading={feature ? "eager" : "lazy"} style={imageScale ? { "--img-scale": imageScale } : undefined} />
           ) : (
             <div className="card__fallback" aria-hidden="true">
               <span className="wordmark">Hellish Views</span>
