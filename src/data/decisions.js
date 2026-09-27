@@ -9,7 +9,9 @@ export const decisions = [
     id: "review-full-text",
     title: "Full review here, or a teaser that sends readers to Substack?",
     where: "Review page",
-    status: "open",
+    status: "decided",
+    decided:
+      "Full review readable here, same words as the Substack email. Search engines will usually point at Substack for an individual review; the site's index, filters and scoring pages rank on their own.",
     context:
       "Substack always treats its own copy of a post as the original for search engines. If the full review also lives here, Google will usually show the Substack one. That only affects search results, not readers who come here directly.",
     options: [
@@ -35,7 +37,9 @@ export const decisions = [
     id: "vibes-rung-order",
     title: "Do the Vibes rungs climb the way you meant?",
     where: "Score chart",
-    status: "awaiting",
+    status: "decided",
+    decided:
+      "Keep the order as it is. Readers are used to it, and changing it now would be a bigger cost than the oddness on the chart.",
     context:
       "The chart draws each category as a rising scale, left to right. On Vibes, rung 1 is 'Bit of vibes' and rung 2 is 'Not my vibes', so rung 2 reads as lower than rung 1.",
     options: [
@@ -47,12 +51,12 @@ export const decisions = [
   {
     id: "culture-per-medium",
     title: "Should Cultural Significance read differently for TV and books?",
-    where: "Score chart, Scoring page",
+    where: "Score chart, scoring guide",
     status: "open",
     context:
-      "The rungs are written for film: 'Cult Film', 'Big in Horror Circles', with The Wicker Man and Scream as the examples.",
+      "The rungs are written with films in mind: 'Big in Horror Circles', 'Significant', 'Essential', with The Wicker Man and Scream as the examples of Essential.",
     options: [
-      "One wording for everything. A novel can be a 'Cult Film' and readers understand the spirit.",
+      "One wording for everything. A novel can be 'Big in Horror Circles' and readers understand the spirit.",
       "A TV version and a book version with their own rung names and examples. The chart picks the right one automatically from the review's medium.",
     ],
     recommendation: "Option 2. It's set up to allow this already; you'd just need to write the words.",
@@ -76,24 +80,25 @@ export const decisions = [
     title: "What goes on the home page, and in what order?",
     where: "Home",
     status: "open",
-    context: "This page is what a first-time visitor sees. Everything below the latest review is optional.",
+    context:
+      "This page is what a first-time visitor sees. Everything below the latest review is optional. The Letterboxd strip is built but switched off until you have an account.",
     options: [
-      "Latest review at full width, then recent posts of every kind, then your Letterboxd 'recently watched', then a pointer to the scoring system, then subscribe.",
-      "Same, without the Letterboxd strip.",
+      "The wordmark beside the latest review, then recent posts of every kind, then a short about, and subscribe.",
+      "Same, plus your Letterboxd 'recently watched' once you have an account. The slot is already there.",
       "Same, plus a small 'Also on Substack' block for the things that stay there: polls, Hellish Sounds, announcements.",
     ],
-    recommendation: "Option 1 to start.",
+    recommendation: "Option 1 now, option 2 when Letterboxd exists.",
   },
   {
     id: "reader-scorer",
     title: "Let readers score a film themselves?",
-    where: "Scoring page",
+    where: "Scoring guide, on the Reviews page",
     status: "open",
     context:
-      "You've said you want comment sections full of reader scores. A small tool on the scoring page could let a reader fill in the five categories, get their own chart and copy it.",
+      "You've said you want comment sections full of reader scores. A small tool at the end of the scoring guide could let a reader fill in the five categories, get their own chart and copy it.",
     options: [
       "Yes. Readers build their own chart here and paste it into Substack comments.",
-      "No. Keep the scoring page as the explainer only.",
+      "No. Keep the scoring guide as the explainer only.",
     ],
     recommendation: "Yes, it's cheap once the chart exists.",
   },
@@ -104,7 +109,7 @@ export const decisions = [
     status: "open",
     context: "This replaces the Contents Page you maintain by hand. It's for someone checking whether you've covered a specific film.",
     options: [
-      "Compact A–Z list with year and score, jump-to-letter rail. Everything on one screen.",
+      "Compact A–Z list with year and score, and jump links to each section. Everything on one screen.",
       "Cards with artwork, like the reviews page. Nicer to browse, much longer to scan.",
     ],
     recommendation: "Option 1.",
@@ -112,11 +117,12 @@ export const decisions = [
   {
     id: "search",
     title: "Does the site need search?",
-    where: "Search",
+    where: "Search, in the header",
     status: "open",
-    context: "At about 200 pieces, the contents page and filters may already do the job.",
+    context:
+      "At about 200 pieces, the contents page and filters may already do the job.",
     options: [
-      "Yes: a search box that finds by title, director or author, tags and the text of the review.",
+      "Yes: the magnifying glass in the header opens a box that finds by title, director or author, tags and the text of the review, without leaving the page you're on.",
       "No: rely on the contents page and the review filters.",
     ],
     recommendation: "Yes, it's small at this size.",

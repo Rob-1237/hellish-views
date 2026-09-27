@@ -1,30 +1,37 @@
 import Link from "next/link";
+import NavLinks from "./NavLinks";
+import StackedWordmark from "./StackedWordmark";
+import ScoringGuide from "./ScoringGuide";
+import { features, site } from "@/data/site";
 
+// Three columns: the stacked wordmark, the two actions, the nav links (same
+// colours and hover as the header). The scoring guide modal lives here, once,
+// for the whole site; the Reviews page opens it with a ModalTrigger.
 export default function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="container">
-        <div>
-          <p>
-            <strong>Hellish Views</strong>
-          </p>
-          <p>Horror reviewed, scored, and occasionally written. Sample footer copy.</p>
+        <StackedWordmark className="site-footer__mark" />
+        <div className="site-footer__actions">
+          <ScoringGuide />
+          <a className="btn btn--primary" href={`${site.substack}/subscribe`}>
+            Subscribe on Substack
+          </a>
         </div>
-        <ul>
-          <li><Link href="/reviews">Reviews</Link></li>
-          <li><Link href="/writing">Writing</Link></li>
-          <li><Link href="/series">Series</Link></li>
-          <li><Link href="/index">Contents</Link></li>
-          <li><Link href="/scoring">Scoring</Link></li>
-        </ul>
-        <ul>
-          <li><Link href="/about">About</Link></li>
-          <li><Link href="/subscribe">Subscribe</Link></li>
-          <li><a href="https://hellishviews.substack.com">Substack</a></li>
-          <li><a href="https://letterboxd.com">Letterboxd</a></li>
+        <nav className="navlinks navlinks--column" aria-label="Footer">
+          <NavLinks />
+        </nav>
+        {/* <ul className="navlinks navlinks--column">
+          <li><Link href="/#about">About</Link></li>
+          <li><Link href="/#subscribe">Subscribe</Link></li>
+          <li><Link href="/reviews#scoring">How the scores work</Link></li>
+          <li><a href={site.substack}>Substack</a></li>
+          {features.letterboxd && features.letterboxdUsername && (
+            <li><a href={`https://letterboxd.com/${features.letterboxdUsername}/`}>Letterboxd</a></li>
+          )}
           <li><Link href="/rss.xml">RSS</Link></li>
           <li><Link href="/credits">Credits &amp; contact</Link></li>
-        </ul>
+        </ul> */}
       </div>
     </footer>
   );

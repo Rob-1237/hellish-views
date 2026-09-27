@@ -3,6 +3,80 @@
 2026-09-19 · Evaluation of SITEMAP_DRAFT against CMS_RESEARCH, SUBSTACK_RESEARCH, LETTERBOXD_RESEARCH and ARCHIVE_MIGRATION
 Updated 2026-09-20 with Harry's first answers. SITEMAP_DRAFT has been revised per section 6.
 
+## Update 2026-09-27 — real posts in the preview, and what they showed
+
+The samples are now 29 of Harry's free posts, pulled from the public Substack API by `scripts/pull-substack-samples.py`. Findings that matter for the export and the schema:
+
+- **The rubric starts at 1, not 0.** Fun, Scary, Vibes and Sick run 1–5; Cultural Significance runs 1–3 or N/A (Big in Horror Circles, Significant, Essential). Max 23 holds. `rubric.js` now carries his real labels and order: Fun, Cultural Significance, Scary, Vibes, Sick. **Sick is how much he loved it** ("Pretty good" to "Ultimate"), not gore — the old placeholder had it backwards.
+- **Scores live in an image.** Every scored review opens with the key table as a PNG, cells highlighted, then "Total Score: N/23." as text. The converter drops both and draws the chart from data; the per-category scores had to be read by eye. For the full archive that is ~45 images to transcribe — a job for the review screen during migration, not a script.
+- **Older posts write the total differently or not at all.** *Evil Dead II* has "18/23" alone; *Jennifer's Body* and *Army of Darkness* have the table and no total. *Kill List* says "13/24" — the table adds to 13/23, so it's a typo.
+- **Numbering has gaps and mismatches.** Slugs and titles disagree in places (`review-34-the-long-walk-2025` is titled #35; `review-23-the-slumber-party-massacre` is #24). The gap check on `/index` will earn its keep.
+- **Public archive lists 228 posts**, short of the ~250 estimate; paid-only posts return truncated bodies (*Frances* is one). The export will carry both.
+- **Formatting converted cleanly:** paragraphs, nested italic/bold (Darkling), links, captions, lists, section breaks, @-mentions. The poems use one paragraph per line and `***` between stanzas, which maps straight onto the poetry template. This is good news for the §7 fidelity question.
+- **Search is on** now that there's real text to search.
+
+## Update 2026-09-23 — second round, and the migration call
+
+Harry:
+
+- **Vibes rung order stays as it is.** He knows it reads oddly; readers are used to it and the churn isn't worth it. Decision 13 closed. The chart renders the rungs as authored and must not reorder them — noted in `src/data/rubric.js` so nobody "fixes" it later.
+- **No Letterboxd account yet.** He raised it so the build wouldn't preclude it. Decision 16 is therefore not a blocker and not a design question: the strip, its styles and its home-page slot are built and switched off behind `features.letterboxd` in `src/data/site.js`. Nothing about the current design impedes it. When there's a username, verify the live feed and flip the flag.
+- **Migrate all 250 if it isn't hard; otherwise the last 90 days.** Assessed in section 7 below. Short answer: migrate all 250, and the 90-day fallback should be avoided even if the work turns out to be awkward.
+
+Rob:
+
+- **Full text on both.** Decision 1 closed, option A. The site declares itself canonical for its own copy and links out with "Originally published on Substack"; Substack self-canonicalises regardless. Implemented.
+- **Next.js, hosted on Netlify.** Decision 2 closed. `netlify.toml` committed; Netlify's Next runtime covers the two server-rendered routes (`/search`, `/rss.xml`).
+- **Sanity, one seat.** Decision 3 closed. A second editor seat is a later, trivial addition.
+- **`hellish-views.netlify.app`** through development and decision-making; no Substack custom domain for now. Decision 4 closed. Holding off is the right call — it keeps both options open, since Substack claims `www.` of whatever domain it is pointed at.
+- **Export coming from Harry.**
+
+Remaining open: the six popup decisions Harry can now click through on the site (comments, card score display, home composition, reader scorer, contents density, search), and the TV/book wording for Cultural Significance.
+
+---
+
+## 7. Migrating the full archive — difficulty
+
+**Recommendation: migrate all 250. Do not fall back to 90 days.**
+
+### Why 90 days is the wrong fallback
+
+It isn't a smaller version of the same thing; it's a different and much weaker site. Roughly 60 posts fall in a 90-day window, containing perhaps eight of the 45 numbered reviews.
+
+- `/index` is the clearest single win in the whole project — it replaces a Contents Page Harry maintains by hand and refers readers to constantly. A contents page covering the last three months is **worse than what he has today**.
+- The numbered-review gap check needs #1 to #45 to mean anything.
+- `/series` breaks: the Evil Dead run and the Dark Tower read both start well outside 90 days.
+- Search over 60 posts is pointless; over 250 it's the reason someone visits.
+- The site would be an archive missing four-fifths of the archive, which undercuts the premise that it is the structured home.
+
+If the work turns out to be harder than expected, the right thing to cut is *depth* (how much metadata each old post carries), not *breadth* (how many posts exist).
+
+### Why the full archive is not the expensive part
+
+The automated work costs almost the same for 60 posts as for 250: one converter, run over a bigger input. Marginal cost per post is close to zero for parsing the export, mapping fields, generating slugs and writing documents. The numbered reviews are the easy majority — titles follow `Review #N - Title (Year)`, so number, title and work year parse mechanically, and the medium is inferable from there.
+
+What actually costs time is human judgement on the non-review posts — recommendations, collaborations, specials, commentary — and that is a set of maybe 80 to 120 items, not 250. At a few seconds each with a decent review screen, that is an afternoon, and it is Harry's afternoon rather than a development cost.
+
+### The two-tier model that makes it proportionate
+
+Every post comes across. Not every post earns the same treatment.
+
+- **Archived** — imported with title, date, body, `substackUrl`, `originalPublishedAt` and images. Reachable, searchable, listed in the contents page. No medium, no work year, no score, no series. This is the default and it is nearly free.
+- **Curated** — promoted to a full Review, Writing, Post or Series member with the complete metadata. All 45 numbered reviews, the fiction and poetry, the series, the substantial essays.
+
+The earlier recommendation to leave polls and ephemera behind still holds in spirit, but a `status: archived` record costs so little that keeping them is cheaper than deciding one by one whether to. They simply don't get promoted, and they don't appear in the curated views. Hellish Sounds stays out of scope entirely, as agreed.
+
+### The two unknowns, and the check to run first
+
+I can't size this precisely until the export lands. Two things decide whether "not difficult" holds:
+
+1. **HTML fidelity.** How cleanly Substack's exported markup converts into the block library — pull quotes, captioned images, numbered notes, ranked lists. If it is clean, conversion is one script. If Harry's formatting varies a lot across a year, the converter needs more special cases.
+2. **Images.** Volume is probably 500–1500 files across the archive, and the earlier research flagged that Substack's CDN may be hotlink-protected. That is bandwidth and scripting, not human effort, but it is the part most likely to be fiddly.
+
+**First thing to do when the export arrives:** convert twenty posts spanning the full year — a few numbered reviews, a story, a poem, a collaboration, a poll, something from the earliest weeks — and inspect the output. That sample answers both questions in an hour and converts this estimate into a real one. If it comes out badly, the fallback is *archived-tier for the older material*, not a 90-day cutoff.
+
+---
+
 ## Update 2026-09-20 — answers received
 
 - **Scoring going forward:** every Review gets the rubric. Harry's own writing (`/writing`) is never scored. Closes decisions 10 and 11.
@@ -23,13 +97,13 @@ Status of the sitemap's open flags:
 | Flag | Status |
 | :---- | :---- |
 | Archive size | Closed — ~250 posts, 45 numbered reviews, ~1 year |
-| CMS choice | Closed — Sanity |
-| Letterboxd feed format | Closed at design level; verify live feed at build |
-| Substack canonical handling | Reopened — structural conflict, decision needed |
+| CMS choice | Closed — Sanity, one seat |
+| Letterboxd feed format | Deferred — no account yet; built behind a flag, nothing impedes it |
+| Substack canonical handling | Closed 2026-09-23 — full text both, site self-canonical |
 | Migration approach | Closed in shape (export → inventory → normalise); open in detail |
 | Fiction scored? | Closed 2026-09-20 — never scored |
 | Cultural Significance wording across media | Closed 2026-09-20 — per-medium rubric versions permitted; wording still to write |
-| Vibes rungs non-monotonic | Open — asked, awaiting Harry. Follow up. |
+| Vibes rungs non-monotonic | Closed 2026-09-23 — order stays as authored |
 | Retro-score older reviews? | Closed 2026-09-20 — no; migrated content stays as-is |
 
 ---
@@ -159,10 +233,10 @@ These had no new information in the research. Still to close before build, none 
 
 | # | Decision | Owner | Recommendation | Blocks |
 | :---- | :---- | :---- | :---- | :---- |
-| 1 | Full text on site + Substack (A), landing pages (B), or site-first (C) | Rob, with Harry | A | Schema, migration scope, framework |
-| 2 | Frontend framework | Rob | Astro or Next; not a Vite SPA | Preview, OG, RSS, feeds |
-| 3 | Sanity Growth for scheduled drafts | Rob / Harry (cost) | Yes, 1–2 seats | Embargoed publishing |
-| 4 | Domain and Substack custom-domain stance | Rob / Harry | Site owns apex+www; Substack stays on subdomain | Nothing yet; avoid later conflict |
+| 1 | Full text on site + Substack (A), landing pages (B), or site-first (C) | Rob, with Harry | Closed — A, implemented | — |
+| 2 | Frontend framework | Rob | Closed — Next.js on Netlify | — |
+| 3 | Sanity Growth for scheduled drafts | Rob / Harry (cost) | Closed — one seat to start | — |
+| 4 | Domain and Substack custom-domain stance | Rob / Harry | Closed — `hellish-views.netlify.app`; Substack custom domain on hold | — |
 | 5 | Add `Post` type and route for meta/essays | Rob | Yes, `/posts/[slug]` working name | `/index` meta section |
 | 6 | Review `kind` field for recommendations/commentary | Rob | Yes | Migration classification |
 | 7 | `contributors[]` for collaborations | Rob | Yes | Migration classification |
@@ -171,13 +245,13 @@ These had no new information in the research. Still to close before build, none 
 | 10 | Score as capability of Review, not universal | Rob | Closed — adopted | Schema |
 | 11 | Fiction rubric version | Harry | Closed — writing is never scored | Nothing |
 | 12 | Cultural Significance per-medium wording | Harry | Closed — permitted; write TV and book variants as rubric versions | Rubric content |
-| 13 | Vibes rung order | Harry | **Open — awaiting answer, follow up**; popup on the chart if still open at build | Chart rendering |
+| 13 | Vibes rung order | Harry | Closed — stays as authored; chart must not reorder | — |
 | 14 | Retro-score old reviews | Harry | Closed — no | Migration effort (reduced) |
-| 15 | Which of ~250 posts migrate | Harry, with Rob | Reviews, fiction, poetry, substantial essays, series, key meta | Migration |
-| 16 | Letterboxd username; inspect live feed | Harry → Rob | — | Strip implementation, not design |
+| 15 | Which of ~250 posts migrate | Harry, with Rob | Closed — all 250, two tiers (see §7) | Export |
+| 16 | Letterboxd username; inspect live feed | Harry → Rob | Deferred — no account yet; flag is built and off | — |
 | 17 | Image rights and credits for existing posts | Harry | Closed — Fair Use; keep credit/source fields and takedown contact as practice | Nothing |
 
-Order of operations: 1 and 2 first, together. Then 5–8 land in the schema. In parallel and not blocked: request the Substack export, get the Letterboxd username, chase 13.
+Order of operations as of 2026-09-23: decisions 1–4, 10–14 and 17 are closed and the structural pass is built. Next is the export — convert a twenty-post sample (§7), then the Sanity schema carrying 5–8, then the real content. Decision 9 and Harry's six popup decisions can be settled any time; none block the schema.
 
 ---
 

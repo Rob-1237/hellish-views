@@ -1,4 +1,4 @@
-import { getRubric, scoreTotal } from "@/data/rubric";
+import { getRubric, scoreTotal, rungLabel } from "@/data/rubric";
 import Decision from "./Decision";
 
 // Renders the versioned rubric with the scored rung lit, an N/A treatment,
@@ -22,7 +22,7 @@ export default function RubricChart({ rubricId, scores, title, showDecisions = t
   const text = rubric.categories
     .map((c) => {
       const v = scores[c.key];
-      return v === "na" ? `${c.label}: not applicable` : `${c.label}: ${v} of ${c.max}, ${c.rungs[v]}`;
+      return v === "na" ? `${c.label}: not applicable` : `${c.label}: ${v} of ${c.max}, ${rungLabel(c, v)}`;
     })
     .join(". ");
 
@@ -33,8 +33,8 @@ export default function RubricChart({ rubricId, scores, title, showDecisions = t
           <p className="eyebrow">{rubric.title}</p>
           {showDecisions && (
             <div className="decision-wrap" style={{ marginTop: "var(--space-2)" }}>
-              <Decision id="vibes-rung-order" />
-              <Decision id="culture-per-medium" />
+              {/* <Decision id="vibes-rung-order" /> */}
+              {/* <Decision id="culture-per-medium" /> */}
             </div>
           )}
         </div>
@@ -50,7 +50,7 @@ export default function RubricChart({ rubricId, scores, title, showDecisions = t
             <div className="chart__row">
               <div className="chart__label">
                 {c.label}
-                {!compactLabels && <small>{na ? "N/A" : c.rungs[v]}</small>}
+                {!compactLabels && <small>{na ? "N/A" : rungLabel(c, v)}</small>}
               </div>
               <div className="chart__rungs" aria-hidden="true">
                 {na ? (
@@ -59,7 +59,7 @@ export default function RubricChart({ rubricId, scores, title, showDecisions = t
                   Array.from({ length: c.max }, (_, i) => {
                     const step = i + 1;
                     const cls = step < v ? "is-lit" : step === v ? "is-top" : "";
-                    return <div key={i} className={`chart__rung ${cls}`} style={{ "--i": i }} title={c.rungs[step]} />;
+                    return <div key={i} className={`chart__rung ${cls}`} style={{ "--i": i }} title={rungLabel(c, step)} />;
                   })
                 )}
               </div>

@@ -1,23 +1,25 @@
 # Hellish Views — Sitemap Draft
 
 2026-09-19 · @Someone
-Revised 2026-09-20 against FLAGS_AND_DECISIONS.md and Harry's first round of answers.
+Revised 2026-09-23. Second round of answers from Harry and Rob folded in; see FLAGS_AND_DECISIONS.md.
 
 ## Scope and locked assumptions
 
 This sitemap is built on the decisions made so far. Where changing one would change the routes, it is flagged in the final section.
 
 - **Authoring is website-first.** Harry writes in the CMS. The score is built from dropdowns and the chart renders from that data. Publishing to Substack is a copy-paste plus a generated PNG of the chart.
-- **Substack remains the primary publication.** It is where posts go out as email and where the audience already lives. The site is the structured archive. Whether the site or Substack is the canonical copy of the full text is an open decision — see the final section.
+- **Substack remains the primary publication.** It is where posts go out as email and where the audience already lives. The site is the structured archive.
+- **Full text lives in both places.** The site carries the whole review and declares itself canonical; Substack will still self-canonicalise, so an individual review will usually surface as the Substack copy in search. The site's index, filters, scoring and series pages have no Substack equivalent and rank on their own. Decided 2026-09-23.
 - **No site-exclusive content at this stage.** Everything on the site also goes to Substack. The routes below are arranged so a site-only bucket can be added later without restructuring.
 - **Reviews carry a score; Harry's own writing does not.** Everything published going forward under Review gets the rubric. Fiction and poetry under `/writing` are never scored. Rubric versions can extend scoring to other types later if wanted.
 - **Migrated content keeps its original condition.** Nothing from the existing archive is retro-scored. Unscored is a first-class, designed state, not a gap.
 - **The rubric is CMS data, not code.** Categories, rung labels, N/A slots and max total live in a versioned rubric document that each review points at. Cultural Significance may be reworded per medium (film, TV, book) as separate rubric versions.
-- **The CMS is Sanity.** Chosen for hosted infrastructure, visual-editing preview and a JavaScript-friendly schema. Scheduled publishing requires the Growth plan.
-- **Letterboxd is a read-only RSS strip** from the profile feed, filtered to diary entries, fetched and cached server-side. No API relationship.
+- **The CMS is Sanity**, one seat to start. Chosen for hosted infrastructure, visual-editing preview and a JavaScript-friendly schema. Scheduled publishing requires the Growth plan. A second editor seat can be added whenever Harry wants one.
+- **The stack is Next.js on Netlify.** App Router, JavaScript. Netlify's Next runtime covers the server-rendered routes.
+- **The domain is `hellish-views.netlify.app`** through development and review. No custom domain yet, and Harry is holding off on a Substack custom domain — which keeps both options open, since Substack would claim `www.` of any domain he later buys.
+- **Letterboxd is deferred, not designed out.** Harry has no account yet; he raised it so the site would not preclude it. The strip, its styles and its slot on the home page are built and switched off behind a feature flag. When there is a username: verify the live feed, set `features.letterboxd`. Read-only profile RSS, filtered to diary entries, fetched and cached server-side. No API relationship, ever.
 - **Images are used under Fair Use.** Credit and source are still recorded per image as good practice, but they are not a legal gate on migration.
 - **Hellish Sounds is out of scope.** It stays on Substack.
-- **Frontend framework: open.** See the final section.
 
 Archive size is now known: roughly 250 Substack posts over one year, of which 45 are numbered reviews. Expect 150–200 CMS documents after migration. Pagination and index density are non-issues at this scale.
 
@@ -34,18 +36,21 @@ Archive size is now known: roughly 250 Substack posts over one year, of which 45
   /writing/[slug]           Single piece
 /posts                      Essays, meta and explainer posts
   /posts/[slug]             Single post
-/series                     Multi-part runs (the Evil Dead miniseries, etc.)
-  /series/[slug]            Single series, ordered
+  /posts#series             Series section (the Evil Dead miniseries, etc.)
+/series/[slug]              Single series, ordered
 /index                      The full contents page, generated
-/scoring                    The rubric explained
-/about                      Harry, the project, the voice
-/subscribe                  Substack embed and pitch
-/search                     Search results
+/reviews#scoring            Scoring guide — a modal, opened from Reviews and the footer
+/#about                     About — a section on Home
+/#subscribe                 Subscribe — a section on Home
+(search)                    A modal from the header; no page. Off until import
+/search-index.json          Static index the search modal fetches
 /tags/[tag]                 Tag archive
 /rss.xml                    Feed
 ```
 
 A few notes on why it is shaped this way.
+
+**Primary nav is five links and two buttons** (revised 2026-09-27): Home, Reviews, Writing, Posts, Contents, then Search and Subscribe. Series, Scoring, About and Subscribe used to be their own pages; each now lives where a reader already is, so the nav stays short. The footer still links to all of them by anchor.
 
 **`/reviews` is one route, not three.** Films, TV and books share a rubric and a template, so they share a collection. The medium routes are filtered views of the same index rather than separate sections. That keeps one canonical URL per review and lets a review move medium without breaking a link.
 
@@ -55,7 +60,7 @@ A few notes on why it is shaped this way.
 
 **`/posts` holds everything that is neither a review nor original writing.** The scoring explainer, the annual "A Year of Hellish Views", essays. Working name; rename freely.
 
-**`/series` is its own route.** Harry references an Evil Dead miniseries, and his Dark Tower review is effectively part of a reading run. Series membership is a relation on the review, and this route is the generated view of it.
+**Series are a section of `/posts`, with their own detail pages.** Harry references an Evil Dead miniseries, and his Dark Tower review is effectively part of a reading run. Series membership is a relation on the review; `/series/[slug]` is the generated view of one run. There is no `/series` index page — the list lives at `/posts#series`.
 
 **`/index` is the generated replacement** for the hand-maintained Contents Page he currently pins on Substack. Detail in its own section below.
 
@@ -119,9 +124,9 @@ Both carry a word count and a content warning field. He labelled *Darkling* by l
 
 ### `/posts`
 
-Essays, meta and explainer posts. Simple template: title, dek, date, body from the same block library, tags. This is where the scoring explainer's long-form prose is stored; `/scoring` pulls it in alongside the generated grid.
+Essays, meta and explainer posts. Simple template: title, dek, date, body from the same block library, tags. This is where the scoring explainer's long-form prose is stored; the scoring guide pulls it in alongside the generated grid.
 
-### `/series`
+### Series (`/posts#series`, `/series/[slug]`)
 
 A series is a named, ordered run of posts. Membership is a relation on the review or piece, with an explicit order field rather than relying on date, since he may write them out of sequence.
 
@@ -155,25 +160,26 @@ Not a blog roll. Suggested stack:
 
 1. Latest review, given full width
 2. Recent posts across all types
-3. Letterboxd "recently watched" strip, pulled from his profile RSS
-4. A pointer to the scoring system, which he currently pins on Substack for exactly this reason
-5. Subscribe block
+3. About (`#about`)
+4. Subscribe (`#subscribe`)
 
-Optional and deferred: an "Also on Substack" strip for what deliberately stays there — polls, Hellish Sounds, announcements.
+The scoring guide is reached from the Reviews page and the footer (a button on every page), not a Home section.
 
-### `/scoring`
+The Letterboxd "recently watched" strip sits between 2 and 3 and is built but switched off; it appears when Harry has an account. Also deferred: an "Also on Substack" strip for what deliberately stays there — polls, Hellish Sounds, announcements.
 
-The rubric explained, generated from the same rubric data the charts use, so the explainer can never drift from the implementation. His existing explainer post is long-form and personal, so this page should carry that prose alongside the generated grid rather than replacing it with a bare table. Where medium-specific rubric versions differ (Cultural Significance for TV and books), show the variants.
+### Scoring guide (`/reviews#scoring`)
+
+A button on the Reviews page opens it as a scrollable modal; the hash opens it directly, so Home and the footer can link to it. The rubric explained, generated from the same rubric data the charts use, so the explainer can never drift from the implementation. His existing explainer post is long-form and personal, so the guide should carry that prose alongside the generated grid rather than replacing it with a bare table. Where medium-specific rubric versions differ (Cultural Significance for TV and books), show the variants.
 
 This is also the natural home for the reader-facing scorer: a visitor fills in the five categories, gets their own chart, and can copy it. He has said outright that he wants comment sections full of reader scores, and this serves that better than a text box does.
 
-### `/about`
+### About (`/#about`)
 
-Harry, the publication, the voice, the sign-off. Also the right place for the standing image-credit statement he currently appends to posts by hand.
+A section on Home: Harry, the publication, the voice, the sign-off. The standing image-credit statement lives on `/credits`.
 
-### `/subscribe`
+### Subscribe (`/#subscribe`)
 
-Substack embed, plus the pitch. Since Substack stays the primary publication, this needs more prominence than a footer link. Substack exposes a direct `/subscribe` endpoint on the publication; link to it rather than embedding if the embed misbehaves.
+The closing section on Home, and the orange button in the header on every page. Substack embed, plus the pitch. Since Substack stays the primary publication, this needs more prominence than a footer link. Substack exposes a direct `/subscribe` endpoint on the publication; link to it rather than embedding if the embed misbehaves.
 
 ### Legal and credits
 
@@ -201,7 +207,7 @@ Things that appear across routes and are easy to forget at sitemap stage.
 
 **Feed fetching.** Letterboxd (and any Substack strip) must be fetched server-side or through a cached function. Browsers cannot fetch these feeds directly.
 
-**Migration.** Source is the Substack publication export (Settings → Exports), not the RSS feed. Three passes: inventory spreadsheet, automated import, editorial normalisation. Every migrated document keeps `substackUrl` and `originalPublishedAt`. Images are downloaded from Substack's CDN and re-hosted in Sanity. Polls, announcements and Hellish Sounds stay on Substack.
+**Migration.** All ~250 posts come across, in two tiers: everything is imported as an archive record, and the editorial core (reviews, writing, series, substantial essays) is normalised into full structured documents. Source is the Substack publication export (Settings → Exports), not the RSS feed. Every migrated document keeps `substackUrl` and `originalPublishedAt`. Images are downloaded from Substack's CDN and re-hosted in Sanity. Hellish Sounds stays out of scope. Detail and the difficulty assessment are in FLAGS_AND_DECISIONS.md.
 
 ## Decision popups for Harry
 
@@ -227,18 +233,16 @@ None of these block the sitemap. All of them should be closed before the schema.
 
 **For Harry:**
 
-1. Vibes rungs do not climb monotonically — "Bit of vibes" at 1 reads as more positive than "Not my vibes" at 2. Deliberate, or fix before the chart renders them as a rising scale? **Asked; awaiting answer. Follow up.**
-2. Letterboxd username, so the live feed can be inspected.
-3. Which of the ~250 posts migrate. Needs the Substack export and an afternoon with the inventory sheet.
+1. The Substack export. Everything in migration waits on it. He has said it is coming.
+2. Cultural Significance wording for TV and books, if he wants per-medium variants. Permission granted; the words are still to write.
+3. The remaining popup decisions, which he can now click through on the site: comments, card score display, home composition, reader scorer, contents density, search.
 
 **For you:**
 
-1. Canonical model: full text on both (recommended), landing pages that link out, or site-first with Substack as excerpt. Determines whether `body` is a first-class field. May be shown to Harry as a popup, but the architecture call is yours.
-2. Frontend framework. Astro or Next both give Sanity visual editing, OG images, RSS and feed proxies natively; a Vite SPA bolts each one on.
-3. Sanity Growth plan for scheduled drafts, and how many seats.
-4. Domain, and whether a Substack custom domain is ruled out. Substack claims `www.` if it is ever used.
-5. Obtain the Substack export from Harry.
+1. Confirm the block conversion and image re-hosting against the real export before committing to the full-archive migration. See FLAGS_AND_DECISIONS §7.
+2. Sanity project setup, one seat, and the schema — once the export shape is known.
+3. Netlify site creation and first deploy from `hellish-views.netlify.app`.
 
-**Resolved:** CMS (Sanity), archive size (~250 / 45), Letterboxd feed format (verify live at build), fiction unscored, no retro-scoring, per-medium Cultural Significance permitted, image permissions (Fair Use).
+**Resolved:** CMS (Sanity, one seat), stack (Next.js on Netlify), domain (`hellish-views.netlify.app`, no Substack custom domain), canonical model (full text both, site self-canonical), archive size (~250 / 45), migration scope (all 250, two tiers), Letterboxd (deferred behind a flag, not designed out), Vibes rung order (unchanged, deliberate), fiction unscored, no retro-scoring, per-medium Cultural Significance permitted, image permissions (Fair Use).
 
 **Deferred by choice:** site-exclusive content, Hellish Sounds, a second comment system, any Letterboxd API relationship, the "Also on Substack" strip.

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { allSeries, getSeries, seriesMembers } from "@/lib/content";
 import ReviewCard from "@/components/ReviewCard";
@@ -19,7 +20,7 @@ export default async function SeriesDetail({ params }) {
   return (
     <div className="container">
       <div className="page-head">
-        <p className="eyebrow">Series</p>
+        <p className="eyebrow"><Link href="/posts#series">Series</Link></p>
         <h1>{s.title}</h1>
         <p>{s.intro}</p>
       </div>

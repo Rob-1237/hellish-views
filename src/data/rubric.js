@@ -1,8 +1,9 @@
 // Rubric versions. In the real build these are Sanity documents; each review
-// points at one by id. Rung labels marked PLACEHOLDER are stand-ins until
-// Harry's actual wording is copied from the scoring explainer.
+// points at one by id. Labels are Harry's, from the key image on every scored
+// review and "The Hellish Views Scoring System - An Expanded Explanation".
 //
-// Max total: four categories at 0–5 (20) plus Cultural Significance at 0–3 (23).
+// Every category starts at 1, not 0. Max total: Fun, Scary, Vibes and Sick at
+// 1–5 (20) plus Cultural Significance at 1–3 (23). Category order is his.
 
 export const rubrics = {
   "film-v1": {
@@ -14,40 +15,52 @@ export const rubrics = {
       {
         key: "fun",
         label: "Fun",
+        min: 1,
         max: 5,
-        rungs: ["No fun at all", "A flicker", "Some fun", "Good fun", "Great fun", "A riot"], // PLACEHOLDER
-      },
-      {
-        key: "scary",
-        label: "Scary",
-        max: 5,
-        rungs: ["Not scary", "Uneasy", "Tense", "Frightening", "Very scary", "Terrifying"], // PLACEHOLDER
-      },
-      {
-        key: "vibes",
-        label: "Vibes",
-        max: 5,
-        // Rungs 1 and 2 are Harry's actual labels and do not climb monotonically.
-        // Open question to Harry (decision: vibes-rung-order). Others PLACEHOLDER.
-        rungs: ["No vibes", "Bit of vibes", "Not my vibes", "Decent vibes", "Strong vibes", "Immaculate vibes"],
-      },
-      {
-        key: "sick",
-        label: "Sick",
-        max: 5,
-        rungs: ["Clean", "A little blood", "Nasty", "Grim", "Vile", "Unwatchable"], // PLACEHOLDER
+        rungs: ["Not fun", "A bit fun", "Pretty fun", "Fun", "Fucking fun"],
       },
       {
         key: "culture",
         label: "Cultural Significance",
+        min: 1,
         max: 3,
         allowNA: true,
-        // Rungs 1 and 2 are Harry's actual labels. Exemplars: The Wicker Man, Scream.
-        rungs: ["Forgotten", "Cult Film", "Big in Horror Circles", "Household name"],
+        // Exemplars for Essential: The Wicker Man (1973), Scream (1996).
+        rungs: ["Big in Horror Circles", "Significant", "Essential"],
+      },
+      {
+        key: "scary",
+        label: "Scary",
+        min: 1,
+        max: 5,
+        rungs: ["Not really scary", "A bit scary", "Quite scary", "Scary", "Fucking scary"],
+      },
+      {
+        key: "vibes",
+        label: "Vibes",
+        min: 1,
+        max: 5,
+        // Rungs 1 and 2 do not climb monotonically. Confirmed deliberate
+        // 2026-09-23: readers are used to this order, so it stays. The chart
+        // must not reorder or "correct" it.
+        rungs: ["Bit of vibes", "Not my vibes", "Vibes", "So vibes", "Bang on"],
+      },
+      {
+        key: "sick",
+        label: "Sick",
+        min: 1,
+        max: 5,
+        // Sick is how much he loved it, not how gory it is.
+        rungs: ["Pretty good", "Good", "Great", "Brilliant", "Ultimate"],
       },
     ],
   },
 };
+
+// Rungs are stored from the category's minimum, so look them up by score.
+export function rungLabel(cat, v) {
+  return cat.rungs[v - (cat.min ?? 0)];
+}
 
 export function getRubric(id) {
   return rubrics[id] || null;

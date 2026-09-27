@@ -1,0 +1,20 @@
+# Netlify build. The Next.js runtime is auto-installed by Netlify and
+# handles the App Router, including the server-rendered /search and /rss.xml.
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  SITE_URL = "https://hellish-views.netlify.app"
+
+# Deploy Previews and branch builds should not be indexed.
+[context.deploy-preview]
+  [context.deploy-preview.environment]
+    SITE_URL = "https://hellish-views.netlify.app"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ContentCard from "@/components/ContentCard";
 import { allTags, itemsByTag, formatDate } from "@/lib/content";
 
 export function generateStaticParams() {
@@ -21,12 +22,7 @@ export default async function TagPage({ params }) {
       </div>
       <ul className="card-grid">
         {items.map((i) => (
-          <li key={i.href} className="card">
-            <p className="eyebrow">{i.type}</p>
-            <h3><Link href={i.href}>{i.title}</Link></h3>
-            <p className="muted">{i.dek}</p>
-            <p className="meta">{formatDate(i.publishedAt)}</p>
-          </li>
+          <ContentCard key={i.href} href={i.href} image={i.cover} eyebrow={i.type} title={i.title} dek={i.dek} meta={[formatDate(i.publishedAt)]} />
         ))}
       </ul>
       <div style={{ height: "var(--space-12)" }} />

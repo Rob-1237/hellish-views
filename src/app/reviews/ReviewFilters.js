@@ -87,8 +87,8 @@ export default function ReviewFilters({ reviews, lockMedium = null }) {
             At
             <select value={catScore} onChange={(e) => setCatScore(e.target.value)}>
               <option value="">Any</option>
-              {Array.from({ length: rubric.categories.find((c) => c.key === cat).max + 1 }, (_, i) => (
-                <option key={i} value={String(i)}>{i}</option>
+              {(({ min = 0, max }) => Array.from({ length: max - min + 1 }, (_, i) => i + min))(rubric.categories.find((c) => c.key === cat)).map((n) => (
+                <option key={n} value={String(n)}>{n}</option>
               ))}
             </select>
           </label>

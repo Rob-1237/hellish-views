@@ -36,7 +36,6 @@ function AZ({ items, id, heading }) {
 export default function ContentsPage() {
   const reviews = allReviews();
   const numbered = reviews.filter((r) => r.reviewNumber).sort((a, b) => a.reviewNumber - b.reviewNumber);
-  const letters = [...new Set(reviews.map((r) => initial(r.title)))].sort();
   const sections = [
     ["films", "Films"],
     ["tv", "TV"],
@@ -59,17 +58,13 @@ export default function ContentsPage() {
       <div className="page-head">
         <div className="decision-wrap">
           <h1>Contents</h1>
-          <Decision id="index-density" />
+          {/* <Decision id="index-density" /> */}
         </div>
-        <p>Everything published, generated from the archive. Replaces the hand-maintained Contents Page.</p>
+        <p>Everything from the archive</p>
       </div>
       <nav className="letter-rail" aria-label="Sections">
         {sections.map(([id, label]) => (
           <a key={id} href={`#${id}`}>{label}</a>
-        ))}
-        <span aria-hidden="true">·</span>
-        {letters.map((l) => (
-          <a key={l} href={`#films-${l}`}>{l}</a>
         ))}
       </nav>
 
@@ -115,11 +110,11 @@ export default function ContentsPage() {
 
       <section className="index-section" id="numbered">
         <h2 style={{ fontSize: "var(--text-2xl)", marginBottom: "var(--space-4)" }}>Numbered reviews</h2>
-        {gaps.length > 0 && (
+        {/* {gaps.length > 0 && (
           <p className="muted" style={{ marginBottom: "var(--space-4)" }}>
             Sequence has gaps at: {gaps.join(", ")} (expected with sample data).
           </p>
-        )}
+        )} */}
         <ul className="index-list">
           {numbered.map((r) => (
             <li key={r.slug}>

@@ -6,8 +6,15 @@
 
 :root {
   /* ---- Typography ------------------------------------------------------ */
-  --font-heading: var(--font-fallback-serif);
+  --font-heading: var(--font-cinzel, var(--font-fallback-serif)), var(--font-fallback-serif);
   --font-body:    var(--font-fallback-sans);
+  /* The wordmark only: HELLISH VIEWS, always in capitals. HAL Gap (HAL
+     Typefaces) once licensed; until then the trial files locally, and Big
+     Shoulders Display (next/font, --font-standin) wherever they're absent. */
+  --font-display: "HAL Gap", var(--font-standin, Impact), Impact, "Arial Narrow", sans-serif;
+  /* HAL Gap's width axis runs 20 (XXS) to 200 (XXL). 90 sits between S and
+     M, matching the poster lettering Rob chose. */
+  --wordmark-width: 90;
   --font-fallback-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-fallback-serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -57,64 +64,77 @@
   --container-gutter: clamp(1rem, 4vw, 2rem);   /* 16→32 */
 
   /* ---- Color (60 / 30 / 10) ------------------------------------------- */
-  /* 60% neutrals — tint toward the brand hue; avoid pure #fff / #000 */
-  --color-bg:           #fafaf9;
-  --color-surface:      #ffffff;
-  --color-surface-alt:  #f3f2ef;
-  --color-text:         #141414;
-  --color-text-muted:   #5a5a57;   /* must still be ≥ 4.5:1 on --color-bg */
-  --color-border:       #d9d7d2;   /* ≥ 3:1 on --color-bg for UI boundaries */
+  /* Dark only. A horror publication reads at night, and Harry should see the
+     same site whatever his system theme is. Contrast figures are on --color-surface. */
 
-  /* 30% brand */
-  --color-brand:        #1f3a5f;
-  --color-brand-soft:   #e6ecf4;   /* tints, icon tiles, alt sections */
-  --color-brand-dark:   #0f1d30;   /* dark sections; text flips to --color-on-dark */
-  --color-on-dark:      #f5f5f3;
+  /* 60% neutrals */
+  --color-bg:            #0f1113;
+  --color-surface:       #171a1d;
+  --color-surface-alt:   #1e2226;
+  --color-text:          #f2f2f0;   /* 15.9:1 */
+  --color-text-muted:    #a6a8a5;   /* 7.3:1 */
+  --color-border:        #33373b;   /* dividers only — decorative */
+  --color-border-strong: #646b74;   /* 3.2:1 — inputs and control edges */
 
-  /* 10% accent — CTAs ONLY */
-  --color-accent:       #e8590c;
-  --color-accent-hover: #cf4d08;
-  --color-on-accent:    #ffffff;   /* ≥ 4.5:1 on --color-accent */
+  /* 30% brand: a cold, clinical blue */
+  --color-brand:         #1f3a5f;   /* fills only: dark sections, search button. 1.5:1 as text — never text */
+  --color-brand-dark:    #152840;   /* pressed / deeper fill */
+  --color-on-dark:       #f2f2f0;   /* 10.2:1 on --color-brand */
+
+  /* Accent: the pale clinical blue family. Links, nav, labels, data marks,
+     secondary buttons. Dark text sits on the two lighter ones. */
+  --color-accent:        #d2e3fc;   /* 13.4:1 — links, nav, eyebrows */
+  --color-accent-hover:  #e8f0fe;   /* 15.3:1 — hover and active */
+  --color-accent-deep:   #6b93c6;   /* 5.5:1 — score bars, lit rungs, dates, the scoring button */
+  --color-on-accent:     #0f1113;   /* 6.0:1 on accent-deep, 14.5:1 on accent */
+
+  /* CTA: the 10% — Subscribe and nothing else */
+  --color-cta:           #a3430a;   /* white text 6.2:1 */
+  --color-cta-hover:     #ff3c00;   /* white text fails (3.6:1), so text flips dark: 5.3:1 */
+  --color-on-cta:        #ffffff;
+  --color-on-cta-hover:  #0f1113;
+
+  /* Build-only: decision markers for Harry. Not part of the brand. */
+  --color-flag:          #e8590c;   /* dark text 5.3:1 */
 
   /* semantic (pair with icon/label, never color alone) */
-  --color-success: #1e7f4f;
-  --color-error:   #b42318;
+  --color-success: #3fa36f;
+  --color-error:   #e5484d;
 
   /* ---- Shape & elevation ---------------------------------------------- */
-  --radius-sm:   0.375rem;  /* 6  inputs, tags */
-  --radius-md:   0.75rem;   /* 12 cards, buttons */
-  --radius-lg:   1.25rem;   /* 20 panels, images */
+  --radius-sm:   0.1875rem; /* 3  inputs, tags */
+  --radius-md:   0.375rem;  /* 6  cards, buttons */
+  --radius-lg:   0.625rem;  /* 10 panels, images, dialogs */
   --radius-full: 999px;
 
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / .06);
-  --shadow-md: 0 4px 12px rgb(0 0 0 / .08), 0 1px 3px rgb(0 0 0 / .05);
-  --shadow-lg: 0 16px 40px rgb(0 0 0 / .12), 0 2px 6px rgb(0 0 0 / .06);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / .3);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / .4);
+  --shadow-lg: 0 16px 40px rgb(0 0 0 / .6), 0 2px 6px rgb(0 0 0 / .4);
 
   /* ---- Motion ---------------------------------------------------------- */
-  --duration-fast: 150ms;
-  --duration-base: 250ms;
-  --duration-slow: 500ms;
-  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  /* Slower than stock, with a long settle: nothing should snap. Mirrored in
+     src/lib/motion.js (EASE) for the scripted dialog animations. */
+  --duration-fast: 240ms;
+  --duration-base: 380ms;
+  --duration-slow: 700ms;
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --reveal-distance: 1.5rem;   /* 24px max */
 
   /* ---- Focus ----------------------------------------------------------- */
-  --focus-ring: 2px solid var(--color-brand);
+  --focus-ring: 2px solid var(--color-accent);
   --focus-offset: 2px;
 }
 
-/* Optional dark mode: lift surfaces, keep contrast, slightly desaturate accent */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --color-bg:          #0f1113;
-    --color-surface:     #171a1d;
-    --color-surface-alt: #1e2226;
-    --color-text:        #f2f2f0;
-    --color-text-muted:  #a6a8a5;
-    --color-border:      #33373b;
-    --color-brand-soft:  #1c2b40;
-    --shadow-md: 0 4px 12px rgb(0 0 0 / .4);
-  }
+/* HAL Gap, unlicensed trial: local development only. HAL's trial terms
+   forbid renaming the files or storing them on a public server, so they are
+   loaded exactly where HAL's download put them, and that folder is
+   gitignored. Anywhere it's absent (the Netlify preview), the stand-in shows.
+   Before launch: buy the web licence and point this at the licensed WOFF2. */
+@font-face {
+  font-family: "HAL Gap";
+  src: url("/HAL%20Typefaces%20Unlicensed%20Fonts/HAL%20Gap/HAL%20Gap%20Variable/TTF/HALGapVariableUnlicensed-Variable.ttf") format("truetype");
+  font-display: swap;
 }
 
 /* ==========================================================================
@@ -122,7 +142,7 @@
    ========================================================================== */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; color-scheme: dark; }
 body {
   font-family: var(--font-body);
   font-size: var(--text-base);
@@ -147,13 +167,13 @@ h3 { font-size: var(--text-3xl); }
 h4 { font-size: var(--text-2xl); }
 p  { text-wrap: pretty; max-width: var(--measure); }
 .muted { color: var(--color-text-muted); }
-.eyebrow { font-size: var(--text-sm); font-weight: 600; letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--color-brand); }
+.eyebrow { font-size: var(--text-sm); font-weight: 600; letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--color-accent); }
 
 .container { max-width: var(--container-max); margin-inline: auto; padding-inline: var(--container-gutter); }
 .section   { padding-block: var(--section-padding); }
 .section--alt  { background: var(--color-surface-alt); }
-.section--soft { background: var(--color-brand-soft); }
-.section--dark { background: var(--color-brand-dark); color: var(--color-on-dark); }
+.section--soft { background: var(--color-surface-alt); border-block: 1px solid var(--color-border); }
+.section--dark { background: var(--color-brand); color: var(--color-on-dark); }
 
 .btn {
   display: inline-flex; align-items: center; gap: var(--space-2);
@@ -162,12 +182,18 @@ p  { text-wrap: pretty; max-width: var(--measure); }
   border: 1px solid transparent; min-height: 2.75rem; /* 44px tap target */
   transition: background-color var(--duration-fast) var(--ease-out),
               transform var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
               box-shadow var(--duration-fast) var(--ease-out);
 }
-.btn--primary { background: var(--color-accent); color: var(--color-on-accent); }
-.btn--primary:hover { background: var(--color-accent-hover); transform: translateY(-1px); box-shadow: var(--shadow-md); }
-.btn--secondary { background: transparent; color: var(--color-brand); border-color: var(--color-border); }
-.btn--secondary:hover { background: var(--color-brand-soft); }
+.btn--primary { background: var(--color-cta); color: var(--color-on-cta); }
+.btn--primary:hover, .btn--primary:active { background: var(--color-cta-hover); color: var(--color-on-cta-hover); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn--secondary { background: transparent; color: var(--color-accent); border-color: var(--color-border-strong); }
+.btn--secondary:hover, .btn--secondary:active { color: var(--color-accent-hover); border-color: var(--color-accent); }
+.btn--brand { background: var(--color-brand); color: var(--color-accent); border-color: var(--color-accent-deep); }
+.btn--brand:hover, .btn--brand:active { background: var(--color-brand-dark); color: var(--color-accent-hover); border-color: var(--color-accent); }
+.btn--accent { background: var(--color-accent-deep); color: var(--color-on-accent); }
+.btn--accent:hover, .btn--accent:active { background: var(--color-accent); color: var(--color-on-accent); }
 
 :focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
 

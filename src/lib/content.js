@@ -82,27 +82,15 @@ export function relatedReviews(review, n = 3) {
     .map((x) => x.r);
 }
 
-const blockText = (b) => (b.type === "paragraph" || b.type === "pullQuote" ? b.text : b.items ? b.items.join(" ") : "");
+const stripTags = (s) => (s || "").replace(/<[^>]+>/g, " ");
+const blockText = (b) => stripTags(b.html ?? b.text ?? (b.items ? b.items.join(" ") : ""));
 
-export function searchItems(q) {
-  const needle = q.trim().toLowerCase();
-  if (!needle) return [];
-  return allItems().filter((i) => {
-    const hay = [
-      i.title,
-      i.dek,
-      i.creator,
-      ...(i.tags || []),
-      ...(i.body || []).map(blockText),
-      ...(i.stanzas || []).flat(),
-    ]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase();
-    return hay.includes(needle);
-  });
+// Everything a search should match on, flattened to one lowercase string.
+export function searchText(i) {
+  return [i.title, i.dek, i.creator, ...(i.tags || []), ...(i.body || []).map(blockText), ...(i.stanzas || []).flat(), ...(i.preface || []).map(blockText)]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
 }
 
-export function formatDate(iso) {
-  return new Date(iso + "T00:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
-}
+export { formatDate } from "./format";

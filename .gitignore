@@ -3,3 +3,11 @@ node_modules
 out
 .env*
 .DS_Store
+
+# HAL trial fonts: local testing only. Their terms forbid public hosting,
+# so this folder must never be committed or deployed.
+public/HAL Typefaces Unlicensed Fonts/
+
+# Logo artwork built from the unlicensed HAL Gap trial: concept only until
+# HAL Gap is licensed for logo use. Regenerate with scripts/make-logo.py.
+design/logo/

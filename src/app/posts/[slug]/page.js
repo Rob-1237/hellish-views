@@ -10,7 +10,13 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const p = getPost(slug);
-  return p ? { title: p.title, description: p.dek } : {};
+  if (!p) return {};
+  return {
+    title: p.title,
+    description: p.dek,
+    alternates: { canonical: `/posts/${p.slug}` },
+    openGraph: { title: p.title, description: p.dek, type: "article", url: `/posts/${p.slug}`, publishedTime: p.publishedAt },
+  };
 }
 
 export default async function PostPage({ params }) {

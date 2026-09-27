@@ -17,7 +17,14 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const r = getReview(slug);
-  return r ? { title: `${r.title} (${r.workYear})`, description: r.dek } : {};
+  if (!r) return {};
+  const title = `${r.title} (${r.workYear})`;
+  return {
+    title,
+    description: r.dek,
+    alternates: { canonical: `/reviews/${r.slug}` },
+    openGraph: { title, description: r.dek, type: "article", url: `/reviews/${r.slug}`, publishedTime: r.publishedAt },
+  };
 }
 
 export default async function ReviewPage({ params }) {
@@ -36,7 +43,7 @@ export default async function ReviewPage({ params }) {
             <p className="eyebrow">
               {numberLabel} · {MEDIA[review.medium]?.singular} · {review.workYear}
             </p>
-            <Decision id="review-full-text" />
+            {/* <Decision id="review-full-text" /> */}
           </div>
           <h1>{review.title}</h1>
           <p style={{ fontSize: "var(--text-lg)" }}>{review.dek}</p>
@@ -45,6 +52,7 @@ export default async function ReviewPage({ params }) {
 
         <div className="two-col">
           <div className="stack" style={{ gap: "var(--space-8)" }}>
+            {review.cover && <img className="review-cover" src={review.cover} alt="" />}
             <ContentWarnings warnings={review.contentWarnings} spoilerScope={review.spoilerScope} />
             <RubricChart rubricId={review.rubric} scores={review.scores} title={review.title} />
             <div className="prose">
@@ -64,7 +72,7 @@ export default async function ReviewPage({ params }) {
             <SeriesNav nav={nav} />
             <div className="decision-wrap">
               <a className="btn btn--secondary" href={review.substackUrl}>Discuss on Substack</a>
-              <Decision id="comments" />
+              {/* <Decision id="comments" /> */}
             </div>
             <p className="muted" style={{ fontSize: "var(--text-sm)" }}>
               Originally published on <a href={review.substackUrl}>Substack</a>.
