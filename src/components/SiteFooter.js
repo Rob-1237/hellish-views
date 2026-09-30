@@ -2,6 +2,7 @@ import Link from "next/link";
 import NavLinks from "./NavLinks";
 import StackedWordmark from "./StackedWordmark";
 import ScoringGuide from "./ScoringGuide";
+import ModalTrigger from "./ModalTrigger";
 import { features, site } from "@/data/site";
 
 // Three columns: the stacked wordmark, the two actions, the nav links (same
@@ -14,9 +15,9 @@ export default function SiteFooter() {
         <StackedWordmark className="site-footer__mark" />
         <div className="site-footer__actions">
           <ScoringGuide />
-          <a className="btn btn--primary" href={`${site.substack}/subscribe`}>
+          <ModalTrigger target="subscribe" className="btn btn--primary">
             Subscribe on Substack
-          </a>
+          </ModalTrigger>
         </div>
         <nav className="navlinks navlinks--column" aria-label="Footer">
           <NavLinks />

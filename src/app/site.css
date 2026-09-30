@@ -392,3 +392,9 @@ dialog.modal::backdrop { background: rgb(5 6 8 / .75); }
   .site-footer__actions { order: 2; }
   .site-footer__mark { order: 3; }
 }
+
+/* ---- Subscribe modal --------------------------------------------------- */
+.subscribe-modal__intro { display: grid; grid-template-columns: 6rem 1fr; gap: var(--space-5); align-items: center; }
+.subscribe-modal__thumb { width: 6rem; height: auto; border-radius: var(--radius-md); }
+/* Substack's form, in the colours of Harry's Substack theme; we can't restyle it. */
+.subscribe-modal__embed { display: block; width: 100%; height: 20rem; border: 0; border-radius: var(--radius-md); background: var(--color-surface-alt); }

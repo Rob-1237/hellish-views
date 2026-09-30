@@ -4,6 +4,7 @@ import NavLinks from "./NavLinks";
 import Modal from "./Modal";
 import SearchPanel from "./SearchPanel";
 import Decision from "./Decision";
+import SubscribeModal from "./SubscribeModal";
 import { features } from "@/data/site";
 
 const SearchIcon = () => (
@@ -29,9 +30,7 @@ export default function SiteHeader() {
               <NavLinks />
             </div>
             <div className="site-nav__actions">
-              <Link href="/#subscribe" className="btn btn--primary">
-                Subscribe
-              </Link>
+              <SubscribeModal />
               {features.search && (
                 <Modal label={<SearchIcon />} buttonLabel="Search" title="Search the archive" buttonClass="btn btn--brand btn--icon">
                   <div className="decision-wrap">
