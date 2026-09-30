@@ -155,8 +155,8 @@ LEAD = 760   # baseline to baseline: caps nearly touch, as on the poster
 
 # ---- Full stacked logo ---------------------------------------------------
 full_lines = [
-    ("HELLISH", 0, 700, 1, TEXT),
-    ("VIEWS", 2 * SPACE, 700 + LEAD, 1, TEXT),
+    ("Hellish", 0, 700, 1, TEXT),
+    ("Views", 2 * SPACE, 700 + LEAD, 1, TEXT),
     ("by Harry", 0, 700 + LEAD + 470, 0.42, ACCENT),
     ("Evans", SPACE * 0.42, 700 + LEAD + 470 + 330, 0.42, ACCENT),
 ]
@@ -177,7 +177,7 @@ horiz_thorns = [
     (0, 11, 0.9, 0.95, 55, 250, 95, 55),           # final S, up and out
 ]
 
-def letters(chars="HELISVWbyarvns", gap=120):
+def letters(chars="HELISVWbyarvns", gap=120, filename="hal-gap-letters-wdth90.svg"):
     """Each letter as its own named vector, in a row, for Figma: File >
     Import (or drag in) gives one layer per letter, named by character."""
     parts, x = [], 0
@@ -191,14 +191,19 @@ def letters(chars="HELISVWbyarvns", gap=120):
     svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 0 {x + 60} 1000" width="{x + 120}" height="1000">\n' + "\n".join(parts) + "\n</svg>\n"
     out = ROOT / "design" / "letters"
     out.mkdir(parents=True, exist_ok=True)
-    (out / "hal-gap-letters-wdth90.svg").write_text(svg)
-    return out / "hal-gap-letters-wdth90.svg"
+    (out / filename).write_text(svg)
+    return out / filename
 
 
 if __name__ == "__main__":
-    # --letters: only the loose letters for Figma (design/letters/).
+    # --letters [CHARS]: only the loose letters for Figma (design/letters/).
     if "--letters" in sys.argv:
-        print("letters", letters())
+        i = sys.argv.index("--letters")
+        chars = sys.argv[i + 1] if len(sys.argv) > i + 1 else None
+        if chars:
+            print("letters", letters(chars, filename=f"hal-gap-letters-{chars}-wdth90.svg"))
+        else:
+            print("letters", letters())
     else:
         HERE.mkdir(parents=True, exist_ok=True)
         print("full", build(full_lines, full_thorns, full_vines, name="full"))

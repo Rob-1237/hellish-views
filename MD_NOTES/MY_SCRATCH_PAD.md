@@ -86,3 +86,83 @@ ___
 
 ___
 
+I've made the wordmark standard case and done a pre-demo sweep. Two things need your call before you send Harry the link.
+
+Changed
+
+- "Hellish Views" in standard case. Your edit to the stack was already in, but the CSS was still forcing capitals. I removed that, so the hero, footer, header logo and Subscribe heading all read "Hellish Views" now.
+- Placeholder copy Harry would have seen:
+  - The Subscribe section said "This is the placeholder for the Substack embed." It now reads "Every review, story and poem goes out by email through Substack."
+  - The Credits page had sample text and sample@example.com. It now has a short, real image-policy statement that points people to Harry's Substack for credit corrections or removals.
+- Search engines are blocked from the preview. It carries Harry's full posts, which also live on Substack, so an indexed copy on hellish-views.netlify.app could compete with him in search. To allow indexing at launch, set the SITE_INDEXABLE=true environment variable on the live site.
+- Link previews: if you paste the link into iMessage or Slack, the preview card now shows the Goya image.
+
+Before you send the link
+
+1. Harry won't see HAL Gap. The license forbids hosting the trial fonts publicly, so the Netlify preview falls back to the Big Shoulders stand-in, a noticeably different look. Either show him the logo on your machine, tell him the logo font is a stand-in, or buy the web license first.
+2. Your reference screenshots are committed to public/, so they'll be publicly viewable on the dev site: ChatGPT-image.png, font-choice-for-logo.png (with your Mac dock in it) and our-current-font.png. Want me to move them to MD_NOTES/ and untrack them?
+3. Check two directors I filled in from memory. Harry will spot mistakes about his own subject. Please confirm:
+   - Evil Dead Burn: Sébastien Vaniček
+   - Teenage Sex and Death at Camp Miasma: Jane Schoenbrun
+
+   Resident Evil's director, Zach Cregger, is confirmed by Harry's own review. The rest are well established.
+4. No favicon. The browser tab shows a generic icon. That's fine for a first look, but worth designing along with the logo.
+5. Deploy check: confirm the Netlify site builds from this repo. The build passes locally, and the gitignored HAL font folder won't upload with a git-based deploy.
+
+To discuss with Harry
+
+- The open popup decisions:
+  - comments (on the site or Substack only)
+  - how scores appear on cards
+  - the Home page layout
+  - the reader scorer
+  - Contents layout (compact list or cards)
+  - search
+  - Cultural Significance wording for TV and books
+- Things the real posts raised:
+  - Confirm "Sick" means how much he loved it ("Pretty good" through "Ultimate").
+  - Should Kill List's total be corrected from 13/24 to 13/23?
+  - Paid-only posts like Frances: should they come across in full?
+- Look and feel: Cinzel Decorative for headings, the card design, and the logo direction.
+- Practical:
+  - a contact email for the Credits page
+  - Substack's subscribe embed, or the current link
+  - when the export is coming
+  - the Sanity Growth plan cost if he wants scheduled publishing
+
+How Harry would write a movie review in the CMS
+
+This is the planned Sanity workflow; none of it is built yet, so it's the target to agree on.
+
+- Open the Studio. A private editing site, for example hellish-views.sanity.studio, with his one seat. He logs in and clicks Review → New.
+- The basics:
+  - Title and year. The address (e.g. his-house-2020) fills itself in from these.
+  - Medium: film.
+  - Kind: numbered review. The next number is suggested, e.g. #47.
+  - Director.
+- Cover image: upload it or drag it in. There's a required short description (for screen readers) and optional credit and source fields.
+- Subtitle: the one-liner under the title, like "A rewatch."
+- Before you read: content warnings as a list, plus an optional note on how far spoilers go.
+- Scores: five dropdowns in his order, each showing his own labels ("A bit fun", "Quite scary", "So vibes"...), with N/A available for Cultural Significance. The chart and the total out of 23 update live beside the dropdowns, so there's no table image to make.
+- Writing the review: a Google Docs-style editor with his blocks:
+  - paragraphs with italic, bold and links
+  - pull quotes
+  - images with captions and credits
+  - numbered notes and lists
+  - section breaks
+
+  Pasting from Word or Docs keeps the formatting.
+- Tags and series: pick existing tags or add new ones. If it's part of a run like Evil Dead, choose the series and its position.
+- Preview: a button opens the draft exactly as it'll appear on the site, before anyone else can see it.
+- Publish. It's live on the site within seconds, and appears on Home, Reviews, Contents, search and the RSS feed automatically. Scheduling it for a later date needs Sanity's paid Growth plan.
+- Send it to Substack. Substack has no way to receive posts automatically, so the plan is a Copy for Substack button that copies the formatted review and downloads the score chart as an image. He pastes both into Substack's editor and sends it as usual.
+- Link it back. He pastes the Substack post's address into the review. That turns on the "Originally published on Substack" and "Discuss on Substack" links on the site.
+- Fixing a typo later: edit the review in the Studio and publish again. The site updates in seconds, but Substack has to be edited separately.
+
+
+___
+rgb(107, 147, 198)
+
+-I exported a SVG of the full logo to replace our wordmark stack on the Home hero and the footer. Evaluate the SVG ay `/public/Harry-Logo.svg` and let me know if this is going to work for our purposes.
+-I need to adjust my decision about the footer column order on mobile. On mobile, let's put the links at the top, then the buttons, then the logo. The desktop order is fine as-is.
+-I don't know if this will be of interest to you, but I was given a doc link (available to anyone with the link) for Harry's contentns page. i thought I'd offer it to you in case you thought it was important. Contents page: `https://docs.google.com/document/d/16RrIqBdrNT_vuPZc0s6pL4Gxah_AqtLmKX3SrL9RDMI/edit?tab=t.0`

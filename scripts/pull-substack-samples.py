@@ -46,9 +46,9 @@ MANIFEST = [
     dict(src="evil-dead-ii-1987", type="review", slug="evil-dead-ii-1987", kind="review", title="Evil Dead II", workYear=1987, medium="film", creator="Sam Raimi", scores=S(5, 2, 2, 5, 4), tags=["evil-dead", "horror-comedy"], series="evil-dead", seriesOrder=2),
     dict(src="army-of-darkness-1992", type="review", slug="army-of-darkness-1992", kind="review", title="Army of Darkness", workYear=1992, medium="film", creator="Sam Raimi", scores=S(4, 1, 1, 4, 3), tags=["evil-dead", "horror-comedy"], series="evil-dead", seriesOrder=3),
     dict(src="evil-dead-2013", type="review", slug="evil-dead-2013", kind="review", title="Evil Dead", workYear=2013, medium="film", creator="Fede Álvarez", scores=S(3, 2, 3, 5, 3), tags=["evil-dead", "possession"], series="evil-dead", seriesOrder=4),
-    dict(src="ash-vs-evil-dead-2015-2018", type="review", slug="ash-vs-evil-dead-2015", kind="review", title="Ash vs Evil Dead", workYear=2015, medium="tv", creator="Sam Raimi, Ivan Raimi and Tom Spezialy", scores=None, tags=["evil-dead", "horror-comedy"], series="evil-dead", seriesOrder=5),
-    dict(src="evil-dead-rise-2023", type="review", slug="evil-dead-rise-2023", kind="review", title="Evil Dead Rise", workYear=2023, medium="film", creator="Lee Cronin", scores=S(2, 1, 2, 3, 2), tags=["evil-dead", "possession"], series="evil-dead", seriesOrder=6),
-    dict(src="evil-dead-burn-2026", type="review", slug="evil-dead-burn-2026", kind="review", title="Evil Dead Burn", workYear=2026, medium="film", creator="Sébastien Vaniček", scores=S(4, 1, 2, 4, 3), tags=["evil-dead"], series="evil-dead", seriesOrder=7),
+    dict(src="ash-vs-evil-dead-2015-2018", type="review", slug="ash-vs-evil-dead-2015", kind="review", title="Ash vs Evil Dead", workYear=2015, medium="tv", creator="Sam Raimi, Ivan Raimi and Tom Spezialy", scores=None, tags=["evil-dead", "horror-comedy"]),  # not in his Evil Dead run (Contents Page)
+    dict(src="evil-dead-rise-2023", type="review", slug="evil-dead-rise-2023", kind="review", title="Evil Dead Rise", workYear=2023, medium="film", creator="Lee Cronin", scores=S(2, 1, 2, 3, 2), tags=["evil-dead", "possession"], series="evil-dead", seriesOrder=5),
+    dict(src="evil-dead-burn-2026", type="review", slug="evil-dead-burn-2026", kind="review", title="Evil Dead Burn", workYear=2026, medium="film", creator="Sébastien Vaniček", scores=S(4, 1, 2, 4, 3), tags=["evil-dead"], series="evil-dead", seriesOrder=6),
 
     # ---- Books and TV ----------------------------------------------------
     dict(src="wolves-of-the-calla-a-book-review", type="review", slug="wolves-of-the-calla-2003", kind="review", title="Wolves of the Calla", workYear=2003, medium="book", creator="Stephen King", scores=None, tags=["stephen-king"], series="dark-tower", seriesOrder=1),
@@ -73,7 +73,7 @@ MANIFEST = [
 ]
 
 SERIES = [
-    dict(slug="evil-dead", title="Evil Dead", intro="Every Evil Dead, in order: Raimi's three films, the remake, a season of Ash vs Evil Dead, and the new films."),
+    dict(slug="evil-dead", title="Evil Dead", intro="Every Evil Dead film, in order: Raimi's three, the remake, and the new films."),
     dict(slug="dark-tower", title="The Dark Tower", intro="Harry's reviews of Stephen King's Dark Tower books."),
 ]
 

@@ -19,7 +19,11 @@ export const metadata = {
     siteName: site.name,
     locale: "en_GB",
     url: "/",
+    images: [{ url: "/hellish-views-signature-image.jpg", width: 486, height: 705, alt: "Goya's Saturn Devouring His Son" }],
   },
+  // The preview carries Harry's full posts, which also live on Substack.
+  // Keep it out of search until launch: set SITE_INDEXABLE=true on the live site.
+  robots: process.env.SITE_INDEXABLE === "true" ? undefined : { index: false, follow: false },
 };
 
 export default function RootLayout({ children }) {

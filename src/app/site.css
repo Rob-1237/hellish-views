@@ -28,7 +28,7 @@ a:hover { color: var(--color-accent-hover); }
   display: flex; align-items: center; justify-content: space-between; gap: var(--space-5);
   min-height: 4.5rem; flex-wrap: wrap;
 }
-.wordmark { font-family: var(--font-display); font-weight: 800; font-synthesis: none; font-variation-settings: "wdth" var(--wordmark-width); text-transform: uppercase; letter-spacing: 0.01em; }
+.wordmark { font-family: var(--font-display); font-weight: 800; font-synthesis: none; font-variation-settings: "wdth" var(--wordmark-width); letter-spacing: 0.01em; }
 .site-logo { font-size: var(--text-2xl); line-height: 1; text-decoration: none; color: var(--color-text);
   transition: opacity var(--duration-slow) var(--ease-out), transform var(--duration-slow) var(--ease-out), color var(--duration-fast) var(--ease-out); }
 .site-logo:hover { color: var(--color-accent-hover); }
@@ -71,7 +71,7 @@ a:hover { color: var(--color-accent-hover); }
 
 .site-footer { border-top: 1px solid var(--color-border); padding-block: var(--space-10); font-size: var(--text-sm); color: var(--color-text-muted); }
 .site-footer .container { display: grid; gap: var(--space-8); grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); align-items: start; }
-.site-footer__mark { font-size: 3.5rem; }
+.site-footer__mark { width: 11rem; }
 .site-footer__actions { display: grid; gap: var(--space-3); width: min(100%, 16rem); }
 .site-footer__actions .btn { justify-content: center; }
 
@@ -290,11 +290,8 @@ dialog.modal::backdrop { background: rgb(5 6 8 / .75); }
 .hero__grid { display: grid; gap: var(--space-8); align-items: start; }
 .hero__grid > * { min-width: 0; }
 @media (min-width: 64rem) { .hero__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-10); } }
-.wordmark-stack { line-height: 0.84; letter-spacing: 0; white-space: pre; color: var(--color-text); }
-.wordmark-stack__line { display: block; }
-.wordmark-stack__by { font-size: 0.42em; line-height: 1.05; color: var(--color-accent); text-transform: none; }
-.wordmark-stack__by--first { margin-top: 0.35em; }
-.hero__mark { font-size: clamp(5.5rem, 2.5rem + 9vw, 9.5rem); }
+.wordmark-logo img { display: block; width: 100%; height: auto; }
+.hero__mark { width: min(100%, 28rem); }
 @media (min-width: 64rem) { .hero__mark { position: sticky; top: var(--space-12); } }
 
 .about__figure { display: grid; gap: var(--space-2); }
@@ -382,17 +379,16 @@ dialog.modal::backdrop { background: rgb(5 6 8 / .75); }
 
 /* ---- Footer: everything centred in its column ------------------------- */
 .site-footer .container { justify-items: center; text-align: center; }
-.site-footer__mark { text-align: left; } /* the stack's indents are the design; centre the block, not the lines */
 .site-footer .navlinks--column { justify-items: center; }
 
 /* Contents: the right-hand values (scores, dashes, dates, writing types,
    part counts) in the deeper accent. */
 .index-list li > .muted { color: var(--color-accent-deep); }
 
-/* Footer on phones: buttons, then links, then the wordmark. */
+/* Footer on phones: links, then buttons, then the logo. */
 @media (max-width: 47.99rem) {
   .site-footer .container { grid-template-columns: 1fr; gap: var(--space-8); }
-  .site-footer__actions { order: 1; }
-  .site-footer .navlinks--column { order: 2; }
+  .site-footer .navlinks--column { order: 1; }
+  .site-footer__actions { order: 2; }
   .site-footer__mark { order: 3; }
 }

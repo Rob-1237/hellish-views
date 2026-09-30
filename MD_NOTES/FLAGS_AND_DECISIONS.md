@@ -3,6 +3,19 @@
 2026-09-19 · Evaluation of SITEMAP_DRAFT against CMS_RESEARCH, SUBSTACK_RESEARCH, LETTERBOXD_RESEARCH and ARCHIVE_MIGRATION
 Updated 2026-09-20 with Harry's first answers. SITEMAP_DRAFT has been revised per section 6.
 
+## Update 2026-09-30 — Harry's own Contents Page
+
+Snapshot saved at `MD_NOTES/HARRY_CONTENTS_PAGE.md`. It is how Harry himself classifies the archive, so it outranks our guesses. What it changes:
+
+- **Series are the rule, not the exception.** He calls them Projects and runs about a dozen: Over the Garden Wall, the Super Mega Halloween Project, the Krueger Chronicles, IT: Welcome to Derry, BBC Ghost Stories for Christmas, Dunk and Egg, Johnuary, the Wonders of Ray Harryhausen, Evil Dead, Molly O'Blivion's 31 Films, Scarestack collaborations. We modelled two. The Posts page's Series section needs to hold ~12, and `/contents` should list them the way he does.
+- **Series contain more than reviews.** Most runs open with an Introduction and close with a Wrap-Up, and several are TV episode-by-episode (Derry, Dunk and Egg, Garden Wall). Series membership has to work for Posts and per-episode TV reviews, not just film reviews. Schema change: `series` + `seriesOrder` on every content type, and an optional `episode` field on TV reviews.
+- **Fiction is serialised too.** *Revival* ran in 15 parts. Writing needs series support as well.
+- **More numbered sequences than one.** Numbered Reviews (1–46, **no gaps** — the slug/title mismatches were slug typos only), *Just The Points* (1–11, short score-only reviews), paid *Recommendations* (1–5) and *Variety* (1–4). `kind` becomes `review | just-the-points | recommendation | variety | commentary`, each with its own numbering; the gap check runs per sequence.
+- **Collaborations sit inside the review run** unnumbered (Undertone with The Pale Horse, Wolf Creek with Amy, Body Bags with Giles) — `contributors[]` covers them.
+- **Interviews and Livestreams** are their own categories — a `kind` on Post, or tags.
+- **His colour-coded categories** (Reviews, Projects, One-Off Posts, Interviews, Livestreams, Fiction, Hellish Sounds, Paid) are a ready-made filter set for `/contents`. Worth showing him as-is.
+- Evil Dead: his run is Introduction, 1981, II, Army of Darkness, 2013, Rise, Burn, Wrap-Up. *Ash vs Evil Dead* is not in it; the preview now matches. He lists *Carrie* as (1975); the film is 1976.
+
 ## Update 2026-09-27 — real posts in the preview, and what they showed
 
 The samples are now 29 of Harry's free posts, pulled from the public Substack API by `scripts/pull-substack-samples.py`. Findings that matter for the export and the schema:

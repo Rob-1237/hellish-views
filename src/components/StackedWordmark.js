@@ -1,15 +1,12 @@
-// The stacked HELLISH / VIEWS / by Harry / Evans lockup. Spacing and case are
-// deliberate. Size comes from the caller's class: huge on Home, small in the
-// footer.
+// The stacked Hellish / Views / by Harry / Evans logo, drawn in Figma and
+// exported to public/Harry-Logo.svg. Its fills are already the site's colours
+// (#F2F2F0 and the accent #D2E3FC), so it's used as an image: re-export over
+// the same file and every instance updates. Size comes from the caller's
+// class: large in the Home hero, small in the footer.
 export default function StackedWordmark({ as: Tag = "p", className = "" }) {
   return (
-    <Tag className={`wordmark wordmark-stack ${className}`} aria-label="Hellish Views, by Harry Evans">
-      <span aria-hidden="true">
-        <span className="wordmark-stack__line">HELLISH</span>
-        <span className="wordmark-stack__line">{"  "}VIEWS</span>
-        <span className="wordmark-stack__line wordmark-stack__by wordmark-stack__by--first">by Harry</span>
-        <span className="wordmark-stack__line wordmark-stack__by">{" "}Evans</span>
-      </span>
+    <Tag className={`wordmark-logo ${className}`}>
+      <img src="/Harry-Logo.svg" alt="Hellish Views, by Harry Evans" width={2585} height={2550} />
     </Tag>
   );
 }

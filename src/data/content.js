@@ -2684,8 +2684,8 @@ export const reviews = [
       "evil-dead",
       "horror-comedy"
     ],
-    "series": "evil-dead",
-    "seriesOrder": 5,
+    "series": null,
+    "seriesOrder": null,
     "body": [
       {
         "type": "paragraph",
@@ -2870,7 +2870,7 @@ export const reviews = [
       "possession"
     ],
     "series": "evil-dead",
-    "seriesOrder": 6,
+    "seriesOrder": 5,
     "body": [
       {
         "type": "paragraph",
@@ -3085,7 +3085,7 @@ export const reviews = [
       "evil-dead"
     ],
     "series": "evil-dead",
-    "seriesOrder": 7,
+    "seriesOrder": 6,
     "body": [
       {
         "type": "paragraph",
@@ -4889,7 +4889,7 @@ export const series = [
   {
     "slug": "evil-dead",
     "title": "Evil Dead",
-    "intro": "Every Evil Dead, in order: Raimi's three films, the remake, a season of Ash vs Evil Dead, and the new films."
+    "intro": "Every Evil Dead film, in order: Raimi's three, the remake, and the new films."
   },
   {
     "slug": "dark-tower",
