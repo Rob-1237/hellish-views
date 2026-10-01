@@ -77,37 +77,6 @@ Why it feels like a tech dashboard, and what I'd change next
 I'd suggest this order: fonts and the image treatment first, then the layouts, then real copy when the export arrives.
 ___
 
--We're making good progress. I might have been incorrect with the name `Una resistencia indetectable` as my chosen font for the HELLISH VIEWS logo. Perhaps it is actually `Akzidenz-Grotesk`. I placed a screenshot at `/public/font-choice-for-logo.png` so you can see the one I am seeing and wish to utilize.
--Let's remove the "How the scores work" section from the Home page.
--We need to make footer adjustments:
--1. In column 1, make the stack with the wordmark exactly like he wordmark stack at the top of the Home page (only smaller).
--2. In column 2 we want to place 2 buttons stacked vertically: A blue "How the Scores work" button, as seen on the Reviews page; an orange "Subscribe on Substack" button, as seen in the 'goes out by email' section on theHome page.
--3. I would like to see the footer links placed in a third column. I have deliberately comented-out the additional links because I do not think they belong any longer. The underlines on the links are currently extra wide and would appear better if they do not extend beyong the width of the text.  
-
-___
-
-I've made the wordmark standard case and done a pre-demo sweep. Two things need your call before you send Harry the link.
-
-Changed
-
-- "Hellish Views" in standard case. Your edit to the stack was already in, but the CSS was still forcing capitals. I removed that, so the hero, footer, header logo and Subscribe heading all read "Hellish Views" now.
-- Placeholder copy Harry would have seen:
-  - The Subscribe section said "This is the placeholder for the Substack embed." It now reads "Every review, story and poem goes out by email through Substack."
-  - The Credits page had sample text and sample@example.com. It now has a short, real image-policy statement that points people to Harry's Substack for credit corrections or removals.
-- Search engines are blocked from the preview. It carries Harry's full posts, which also live on Substack, so an indexed copy on hellish-views.netlify.app could compete with him in search. To allow indexing at launch, set the SITE_INDEXABLE=true environment variable on the live site.
-- Link previews: if you paste the link into iMessage or Slack, the preview card now shows the Goya image.
-
-Before you send the link
-
-1. Harry won't see HAL Gap. The license forbids hosting the trial fonts publicly, so the Netlify preview falls back to the Big Shoulders stand-in, a noticeably different look. Either show him the logo on your machine, tell him the logo font is a stand-in, or buy the web license first.
-2. Your reference screenshots are committed to public/, so they'll be publicly viewable on the dev site: ChatGPT-image.png, font-choice-for-logo.png (with your Mac dock in it) and our-current-font.png. Want me to move them to MD_NOTES/ and untrack them?
-3. Check two directors I filled in from memory. Harry will spot mistakes about his own subject. Please confirm:
-   - Evil Dead Burn: Sébastien Vaniček
-   - Teenage Sex and Death at Camp Miasma: Jane Schoenbrun
-
-   Resident Evil's director, Zach Cregger, is confirmed by Harry's own review. The rest are well established.
-4. No favicon. The browser tab shows a generic icon. That's fine for a first look, but worth designing along with the logo.
-5. Deploy check: confirm the Netlify site builds from this repo. The build passes locally, and the gitignored HAL font folder won't upload with a git-based deploy.
 
 To discuss with Harry
 
@@ -161,8 +130,20 @@ This is the planned Sanity workflow; none of it is built yet, so it's the target
 
 
 ___
-rgb(107, 147, 198)
 
--I exported a SVG of the full logo to replace our wordmark stack on the Home hero and the footer. Evaluate the SVG ay `/public/Harry-Logo.svg` and let me know if this is going to work for our purposes.
--I need to adjust my decision about the footer column order on mobile. On mobile, let's put the links at the top, then the buttons, then the logo. The desktop order is fine as-is.
--I don't know if this will be of interest to you, but I was given a doc link (available to anyone with the link) for Harry's contentns page. i thought I'd offer it to you in case you thought it was important. Contents page: `https://docs.google.com/document/d/16RrIqBdrNT_vuPZc0s6pL4Gxah_AqtLmKX3SrL9RDMI/edit?tab=t.0`
+Hi Harry.
+
+I’m sending you a development link so you can check out the sketch I've been working on. You may have to type it out fully:
+
+`hellish-views.netlify.app`
+
+For entering new reviews, you’ll have a private editing area where you enter a review once, and the website automatically takes that information and puts it in the right places. You won’t need to worry about editing the actual website or figuring out how all of the pieces fit together.
+
+It'll just be a form where you can enter the title, year, director, cover image, subtitle, content warnings, scores, tags, and the review itself. You’ll be able to write the review in a familiar, document-like editor, including things like images, links, bold/italic text, quotes, lists, etc.
+
+Once you’re happy with it, you’ll publish it from there. The review will then appear on the website automatically — including the Reviews section, the appropriate listings, search, and anywhere else that needs to display it.
+
+I'm telling you about it because that part isn't built yet, so you won't see the editing area when you look at the site right now. I just wanted to give you the idea of how it will work as you stare at the wweb pages and think about it.
+
+You don't need to do anything, and there is no timeline. If you look at this and think "No way! I don't want all of this!", that's no problem. There is no commitment or anything like that. I just felt like doing this much, and if you don't want to pursue the full build, that is truly no problem. Take all the time you want, and "No thanks" is a perfectly acceptable answer.
+

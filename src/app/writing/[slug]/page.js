@@ -43,7 +43,10 @@ export default async function WritingPiece({ params }) {
         )}
         {w.image && (
           <figure className="writing-image">
-            <img src={w.image.src} alt={w.image.alt || ""} />
+            {/* The same crop as the card: some covers carry white edge bars. */}
+            <div className="writing-image__frame">
+              <img src={w.image.src} alt={w.image.alt || ""} style={w.coverScale ? { "--img-scale": w.coverScale } : undefined} />
+            </div>
             {w.image.caption && <figcaption dangerouslySetInnerHTML={{ __html: w.image.caption }} />}
           </figure>
         )}

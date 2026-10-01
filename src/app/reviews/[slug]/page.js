@@ -10,6 +10,9 @@ import ReviewCard from "@/components/ReviewCard";
 import SubscribeBlock from "@/components/SubscribeBlock";
 import Decision from "@/components/Decision";
 
+// Who made the work, labelled by medium so the byline reads clearly.
+const CREATOR_LABEL = { film: "Directed by", tv: "Created by", book: "Written by" };
+
 export function generateStaticParams() {
   return allReviews().map((r) => ({ slug: r.slug }));
 }
@@ -47,7 +50,7 @@ export default async function ReviewPage({ params }) {
           </div>
           <h1>{review.title}</h1>
           <p style={{ fontSize: "var(--text-lg)" }}>{review.dek}</p>
-          <Byline contributors={review.contributors} publishedAt={review.publishedAt} extra={review.creator && <span>{review.creator}</span>} />
+          <Byline contributors={review.contributors} publishedAt={review.publishedAt} extra={review.creator && <span>{CREATOR_LABEL[review.medium] || "By"} {review.creator}</span>} />
         </header>
 
         <div className="two-col">

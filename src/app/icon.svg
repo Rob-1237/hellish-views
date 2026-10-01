@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 448">
+  <!-- The H from "Harry" in the logo (public/Harry-Logo.svg). Transparent:
+       navy on light browser tabs, the pale accent blue on dark ones. -->
+  <style>path { fill: #1f3a5f; } @media (prefers-color-scheme: dark) { path { fill: #d2e3fc; } }</style>
+  <path transform="translate(-406.5 -1606)" d="M491 1630H588.845V1779.21H671.838V1630H770V2030H671.838V1880.79H588.845V2030H491V1630Z"/>
+</svg>
